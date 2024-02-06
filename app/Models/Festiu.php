@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Festiu extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nom',
+        'curs_id',
+        'data_inici',
+        'data_final',
+        'vacances'
+    ];
+
+    public function curs() {
+        return $this->belongsTo(Cur::class);
+    }
 }

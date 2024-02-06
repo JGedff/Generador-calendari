@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Trimestre;
+use App\Models\Cur;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Trimestre>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cur>
  */
-class TrimestreFactory extends Factory
+class CurFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +18,10 @@ class TrimestreFactory extends Factory
     public function definition(): array
     {
         return [
-            Trimestre::create([
+            Cur::create([
                 'nom' => $this->faker->string(),
-                'data_inici' => $this->faker->dateTime(),
-                'data_final' => $this->faker->dateTime()
+                'data_inici' => $this->faker->dateTime(6),
+                'data_final' => $this->faker->dateTime(6)
             ])
         ];
     }

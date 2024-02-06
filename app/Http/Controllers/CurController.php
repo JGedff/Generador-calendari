@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Curs;
+use App\Models\Cur;
 use Illuminate\Http\Request;
 
-class CursController extends Controller
+class CurController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $curssos = Cur::all();
+        return view('veure_curssos', ['curssos' => $curssos]);
     }
 
     /**
@@ -20,7 +21,7 @@ class CursController extends Controller
      */
     public function create()
     {
-        //
+        return view('crear_curssos');
     }
 
     /**
@@ -28,38 +29,41 @@ class CursController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $curs = Cur::create($request->all());
+        return redirect('veure_curssos');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Curs $curs)
+    public function show(Cur $cur)
     {
-        //
+        return view('mostrar_curs', ['curs' => $cur]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Curs $curs)
+    public function edit(Cur $cur)
     {
-        //
+        return view('editar_curs', ['curs' => $cur]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Curs $curs)
+    public function update(Request $request, Cur $cur)
     {
-        //
+        $cur->update($request->all());
+        return redirect('veure_curssos');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Curs $curs)
+    public function destroy(Cur $cur)
     {
-        //
+        $cur->delete();
+        return redirect('veure_curssos');
     }
 }

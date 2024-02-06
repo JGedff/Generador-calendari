@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('festius', function (Blueprint $table) {
             $table->id();
+            $table->word('nom');
+            $table->unsignedBigInteger('curs_id');
+            $table->foreign('curs_id')
+                ->references('id')
+                    ->on('curs')
+                        ->onDelete('cascade');
+            $table->dateTime('data_inici', 6);
+            $table->dateTime('data_final', 6);
+            $table->boolean('vacances');
             $table->timestamps();
         });
     }

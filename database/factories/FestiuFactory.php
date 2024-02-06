@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Festiu;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,12 @@ class FestiuFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            Festiu::create([
+                'nom' => $this->faker->string(),
+                'data_inici' => $this->faker->dateTime(),
+                'data_final' => $this->faker->dateTime(),
+                'vacances' => $this->faker->boolean()
+            ])
         ];
     }
 }
