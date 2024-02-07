@@ -19,7 +19,7 @@ class TrimestreFactory extends Factory
     {
         return [
             Trimestre::create([
-                'nom' => $this->faker->string(),
+                'nom' => $this->faker->word(),
                 'data_inici' => $this->faker->dateTime(),
                 'data_final' => $this->faker->dateTime()
             ])

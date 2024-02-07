@@ -19,7 +19,7 @@ class FestiuFactory extends Factory
     {
         return [
             Festiu::create([
-                'nom' => $this->faker->string(),
+                'nom' => $this->faker->word(),
                 'data_inici' => $this->faker->dateTime(),
                 'data_final' => $this->faker->dateTime(),
                 'vacances' => $this->faker->boolean()

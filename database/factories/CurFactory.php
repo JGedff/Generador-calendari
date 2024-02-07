@@ -19,7 +19,7 @@ class CurFactory extends Factory
     {
         return [
             Cur::create([
-                'nom' => $this->faker->string(),
+                'nom' => $this->faker->word(),
                 'data_inici' => $this->faker->dateTime(6),
                 'data_final' => $this->faker->dateTime(6)
             ])

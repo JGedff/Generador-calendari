@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('festius', function (Blueprint $table) {
             $table->id();
-            $table->word('nom');
+            $table->string('nom');
             $table->unsignedBigInteger('curs_id');
             $table->foreign('curs_id')
                 ->references('id')

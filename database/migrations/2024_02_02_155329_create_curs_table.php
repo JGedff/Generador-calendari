@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('curs', function (Blueprint $table) {
             $table->id();
-            $table->word('nom');
+            $table->string('nom');
             $table->dateTime('data_inici', 6);
             $table->dateTime('data_final', 6);
             $table->timestamps();
