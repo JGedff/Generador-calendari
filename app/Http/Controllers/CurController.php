@@ -30,7 +30,7 @@ class CurController extends Controller
     public function store(Request $request)
     {
         $curs = Cur::create($request->all());
-        return redirect('veure_curssos');
+        return redirect('/cur');
     }
 
     /**
@@ -55,7 +55,7 @@ class CurController extends Controller
     public function update(Request $request, Cur $cur)
     {
         $cur->update($request->all());
-        return redirect('veure_curssos');
+        return redirect('/cur');
     }
 
     /**
@@ -64,6 +64,6 @@ class CurController extends Controller
     public function destroy(Cur $cur)
     {
         $cur->delete();
-        return redirect('veure_curssos');
+        return redirect('/cur');
     }
 }

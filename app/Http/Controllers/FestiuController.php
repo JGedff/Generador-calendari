@@ -52,7 +52,7 @@ class FestiuController extends Controller
         $req['curs_id'] = $curs->id;
         $festiu = Festiu::create($req);
 
-        return redirect('/curs'.'/'.$festiu->curs_id.'/festius');
+        return redirect('/cur'.'/'.$festiu->curs_id.'/festiu');
     }
 
     /**
@@ -90,7 +90,7 @@ class FestiuController extends Controller
 
         $task->update($request->all());
 
-        return redirect('/curs'.'/'.$curs->id.'/festius');
+        return redirect('/cur'.'/'.$curs->id.'/festiu');
     }
 
     /**
@@ -100,7 +100,7 @@ class FestiuController extends Controller
     {
         $festiu->delete();
 
-        return redirect('/curs'.'/'.$curs->id.'/festius');
+        return redirect('/cur'.'/'.$curs->id.'/festiu');
     }
 
     private function getUrl()
