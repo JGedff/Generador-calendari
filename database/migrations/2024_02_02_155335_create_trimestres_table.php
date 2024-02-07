@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('trimestres', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->dateTime('data_inici', 6);
+            $table->dateTime('data_final', 6);
+            $table->unsignedBigInteger('curs_id');
+            $table->foreign('curs_id')
+                ->references('id')
+                    ->on('curs')
+                        ->onDelete('cascade');
             $table->timestamps();
         });
     }

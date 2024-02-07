@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Trimestre;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class TrimestreFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            Trimestre::create([
+                'nom' => $this->faker->word(),
+                'data_inici' => $this->faker->dateTime(),
+                'data_final' => $this->faker->dateTime()
+            ])
         ];
     }
 }

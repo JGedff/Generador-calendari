@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cur;
+use App\Models\Festiu;
+use App\Models\Trimestre;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,11 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Cur::factory()->count(10)
+            ->has(Festiu::factory()->count(5))
+            ->has(Trimestre::factory()->count(3))
+            ->create();
     }
 }

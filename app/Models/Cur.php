@@ -5,18 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Trimestre extends Model
+class Cur extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'nom',
-        'curs_id',
         'data_inici',
         'data_final'
     ];
 
-    public function curs() {
-        return $this->belongsTo(Cur::class);
+    public function festius() {
+        return $this->hasMany(Festiu::class);
+    }
+
+    public function trimestres() {
+        return $this->hasMany(Trimestre::class);
     }
 }
