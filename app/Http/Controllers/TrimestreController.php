@@ -51,7 +51,7 @@ class TrimestreController extends Controller
         $req['curs_id'] = $curs->id;
         $trimestre = Trimestre::create($req);
 
-        return redirect('/curs'.'/'.$trimestre->curs_id.'/trimestres');
+        return redirect('/cur'.'/'.$trimestre->curs_id.'/trimestre');
     }
 
     /**
@@ -88,7 +88,7 @@ class TrimestreController extends Controller
 
         $trimestre->update($request->all());
 
-        return redirect('/curs'.'/'.$request->id.'/trimestres');
+        return redirect('/cur'.'/'.$request->id.'/trimestre');
     }
 
     /**
@@ -98,7 +98,7 @@ class TrimestreController extends Controller
     {
         $trimestre->delete();
 
-        return redirect('/curs'.'/'.$curs->id.'/trimestres');
+        return redirect('/cur'.'/'.$curs->id.'/trimestre');
     }
 
     private function getUrl()
