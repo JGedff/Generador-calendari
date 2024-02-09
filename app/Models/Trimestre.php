@@ -11,7 +11,7 @@ class Trimestre extends Model
 
     protected $fillable = [
         'nom',
-        'curs_id',
+        'cur_id',
         'data_inici',
         'data_final'
     ];
