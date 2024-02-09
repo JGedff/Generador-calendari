@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\Validator;
 
 class CurController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $curssos = Cur::all();
-        return view('veure_curssos', ['curssos' => $curssos]);
+        $curs = Cur::All();
+
+        return view('curs/see_cur', ['curs' => $curs]);
     }
 
     /**
@@ -22,7 +20,7 @@ class CurController extends Controller
      */
     public function create()
     {
-        return view('crear_curssos');
+        return view('curs/create_cur');
     }
 
     /**
@@ -30,41 +28,82 @@ class CurController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = Validator::make($request->all(), [
+            'nom' => 'required',
+            'data_inici' => 'required',
+            'data_final' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return 'Not all fields were mentioned';
+        }
+
         $curs = Cur::create($request->all());
+
         return redirect('/cur');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Cur $cur)
+    public function show(String $strCurs)
     {
-        return view('mostrar_curs', ['curs' => $cur]);
+        $curs = Cur::find($strCurs);
+
+        return view('curs/show_cur', ['cur' => $curs]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cur $cur)
+    public function edit(Request $request, String $strCurs)
     {
-        return view('editar_curs', ['curs' => $cur]);
+        $curs = Cur::find($strCurs);
+        
+        return view('curs/update_cur', ['cur' => $curs]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cur $cur)
+    public function update(Request $request, String $strCurs)
     {
-        $cur->update($request->all());
+        $curs = Cur::find($strCurs);
+        $validate = Validator::make($request->all(), [
+            'nom' => 'required',
+            'data_inici' => 'required',
+            'data_final' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return 'Not all fields were mentioned';
+        }
+
+        $curs->update($request->all());
+
         return redirect('/cur');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cur $cur)
+    public function destroy(String $strCurs)
     {
-        $cur->delete();
+        $curs = Cur::find($strCurs);
+        $curs->delete();
+
         return redirect('/cur');
+    }
+
+    private function getUrl()
+    {
+        return "$_SERVER[REQUEST_URI]";
+    }
+    
+    private function getCurUrl(String $url)
+    {
+        $urlValues = explode('/', $url);
+        
+        return Cur::find($urlValues[2]);
     }
 }
