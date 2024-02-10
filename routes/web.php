@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CurController;
+use App\Http\Controllers\CalendariController;
 use App\Http\Controllers\FestiuController;
 use App\Http\Controllers\TrimestreController;
 use Illuminate\Support\Facades\Route;
@@ -31,10 +32,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'admin')->group(function () {
     Route::resource('cur', CurController::class);
     Route::resource('cur.festiu', FestiuController::class);
     Route::resource('cur.trimestre', TrimestreController::class);
+    Route::resource('calendari', CalendariController::class);
+});
+
+Route::get('/notAdmin', function () {
+    return view('no_admin');
 });
 
 require __DIR__.'/auth.php';

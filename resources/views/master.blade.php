@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Title</title>
+        <title>Generador calendaris</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -16,12 +16,12 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-
-        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="navbarColor.css">
+        <link rel="stylesheet" href="textMargin.css">
     </head>
 
     <body>
-        <header>
+        <header class="backgroundcolor p-2">
             <!-- place navbar here -->
             @yield('header')
         </header>
@@ -30,7 +30,6 @@
         </main>
         <footer>
             <!-- place footer here -->
-            @yield('footer')
         </footer>
         <!-- Bootstrap JavaScript Libraries -->
         <script

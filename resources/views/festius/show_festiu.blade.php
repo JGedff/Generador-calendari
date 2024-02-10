@@ -1,9 +1,11 @@
 @extends('..master')
 
 @section('main')
+<a href="{{ url('/dashboard') }}" class="m-2 btn btn-secondary">Panell</a>
 <div class="d-flex flex-wrap m-2">
     <h2 class="w-100">Festius</h2>
     <a href="/cur/{{$cursid}}/festiu/create" class="btn btn-success m-2">Crea un nou festiu</a>
+    <a href="/cur/{{$cursid}}/festiu" class="btn btn-info m-2">Veure tots els festius del curs</a>
     <table class="table table-primary d-flex flex-wrap">
         <thead class="w-100">
             <tr class="d-flex justify-items-between">
