@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Cur;
 use App\Models\Festiu;
 use App\Models\Trimestre;
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()->count(10);
+
         Cur::factory()->count(10)
             ->has(Festiu::factory()->count(5))
             ->has(Trimestre::factory()->count(3))

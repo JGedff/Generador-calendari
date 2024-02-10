@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('festius', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->unsignedBigInteger('curs_id');
-            $table->foreign('curs_id')
+            $table->unsignedBigInteger('cur_id');
+            $table->foreign('cur_id')
                 ->references('id')
                     ->on('curs')
                         ->onDelete('cascade');
