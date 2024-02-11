@@ -2,7 +2,7 @@
 
 @section('main')
 <h2 class="textMargin m-2">Introdueix les dades al formulari per crear el teu calendari</h2>
-<form action="/dashboard" class="m-2" method="POST">
+<form action="/calendari" class="m-2" method="POST">
     @csrf
     <table>
         <tr>

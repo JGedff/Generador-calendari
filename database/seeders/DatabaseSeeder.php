@@ -19,9 +19,12 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->count(10);
 
-        Cur::factory()->count(10)
-            ->has(Festiu::factory()->count(5))
-            ->has(Trimestre::factory()->count(3))
+        Calendari::factory()->count(2)
+            ->has(
+                Cur::factory()->count(10)
+                    ->has(Festiu::factory()->count(5))
+                    ->has(Trimestre::factory()->count(3))
+            )
             ->create();
     }
 }

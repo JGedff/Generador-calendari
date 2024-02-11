@@ -32,8 +32,10 @@
     @if(Auth::user()->admin == 1)
         <a href="/calendari/create" class="btn btn-info m-2">Crear un calendari</a>
         <a href="/cur" class="btn btn-info m-2">Veure tots els cursos</a>
+        <a href="/calendari/export" class="btn btn-info m-2">Descarregar calendari</a>
     @else
         <p class="m-2">Estàs loguejat</p>
+        <a href="/calendari/export" class="btn btn-info m-2">Descarregar calendari</a>
     @endif
 @else
 

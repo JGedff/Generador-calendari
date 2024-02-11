@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Calendari;
+use DateTime;
 use App\Models\Cur;
-use App\Models\Trimestre;
 use App\Models\Festiu;
+use App\Models\Calendari;
+use App\Models\Trimestre;
 use Illuminate\Http\Request;
+use App\Exports\calendariExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class CalendariController extends Controller
@@ -18,7 +21,8 @@ class CalendariController extends Controller
     {
         $calendari = Calendari::All();
 
-        return view('calendari/see_calendari', ['calendari' => $calendari]);
+        return redirect('/');
+//        return view('calendari/see_calendari', ['calendari' => $calendari]);
     }
 
     /**
@@ -52,8 +56,8 @@ class CalendariController extends Controller
         }
 
         $reqCur = ['nom' => $request->cur_nom, 'data_inici' => $request->cur_data_inici, 'data_final' => $request->cur_data_final];
-        $reqFestiu = ['nom' => $request->festiu_nom, 'data_inici' => $request->festiu_data_inici, 'data_final' => $request->festiu_data_final];
-        $reqTrimestre = ['nom' => $request->trimestre_nom, 'data_inici' => $request->trimestre_data_inici, 'data_final' => $request->trimestre_data_final];
+        $reqFestiu = ['nom' => $request->festiu_nom, 'data_inici' => $request->festiu_data_inici, 'data_final' => $request->festiu_data_final, 'cur_id' => ''];
+        $reqTrimestre = ['nom' => $request->trimestre_nom, 'data_inici' => $request->trimestre_data_inici, 'data_final' => $request->trimestre_data_final, 'cur_id' => ''];
 
         $data_inici = new DateTime($reqFestiu['data_inici']);
         $data_final = new DateTime($reqFestiu['data_final']);
@@ -67,6 +71,8 @@ class CalendariController extends Controller
         }
 
         $curs = Cur::create($reqCur);
+        $reqTrimestre['cur_id'] = $curs->id;
+        $reqFestiu['cur_id'] = $curs->id;
         $trimestre = Trimestre::create($reqTrimestre);
         $festiu = Festiu::create($reqFestiu);
 
@@ -107,5 +113,9 @@ class CalendariController extends Controller
     public function destroy(Calendari $calendari)
     {
         //
+    }
+
+    public function exportCalendari(){
+        return Excel::download(new calendariExport, 'calendari.xlsx');
     }
 }
