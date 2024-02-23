@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/calendari/export', [CalendariController::class, 'exportCalendari']);
+    Route::resource('cicle', CicleController::class);
+    Route::resource('cicle.modul', ModulController::class);
+    Route::resource('cicle.modul.uf', UfController::class);
+    Route::resource('cicle.modul.dia', DiaController::class);
 });
 
 Route::middleware('auth', 'admin')->group(function () {

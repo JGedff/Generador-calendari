@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Cur;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cur>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Uf>
  */
-class CurFactory extends Factory
+class UfFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +17,7 @@ class CurFactory extends Factory
     public function definition(): array
     {
         return [
-            Cur::create([
+            Uf::create([
                 'nom' => $this->faker->word(),
                 'data_inici' => $this->faker->dateTime(),
                 'data_final' => $this->faker->dateTime()
