@@ -20,7 +20,7 @@ class UfController extends Controller
      */
     public function create()
     {
-        //
+        return view('uf/craete_uf');
     }
 
     /**

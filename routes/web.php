@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CurController;
 use App\Http\Controllers\CalendariController;
+use App\Http\Controllers\CicleController;
+use App\Http\Controllers\UfController;
+use App\Http\Controllers\ModulController;
 use App\Http\Controllers\FestiuController;
 use App\Http\Controllers\TrimestreController;
 use Illuminate\Support\Facades\Route;
@@ -31,10 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/calendari/export', [CalendariController::class, 'exportCalendari']);
-    Route::resource('cicle', CicleController::class);
-    Route::resource('cicle.modul', ModulController::class);
-    Route::resource('cicle.modul.uf', UfController::class);
-    Route::resource('cicle.modul.dia', DiaController::class);
+    Route::resource('cur.cicle', CicleController::class);
+    Route::resource('cur.cicle.modul', ModulController::class);
+    Route::resource('cur.cicle.modul.uf', UfController::class);
 });
 
 Route::middleware('auth', 'admin')->group(function () {

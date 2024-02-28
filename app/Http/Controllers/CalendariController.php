@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use App\Models\Cur;
+use App\Models\Cicle;
 use App\Models\Festiu;
 use App\Models\Calendari;
 use App\Models\Trimestre;
@@ -22,7 +23,6 @@ class CalendariController extends Controller
         $calendari = Calendari::All();
 
         return redirect('/');
-//        return view('calendari/see_calendari', ['calendari' => $calendari]);
     }
 
     /**
@@ -30,7 +30,27 @@ class CalendariController extends Controller
      */
     public function create()
     {
-        return view('calendari/create_calendari');
+        $curs = Cur::All();
+        $cicles = Cicle::All();
+        $cicleModul = array();
+        $modulUf = array();
+        $countMod = 0;
+        $countUf = 0;
+
+        foreach ($cicles as $cicle) {
+            foreach ($cicle->moduls as $modul) {
+                $obj = [
+                    "nom" => $cicle->nom . ' - ' . $modul->nom,
+                    "cicle_id" => $cicle->id,
+                    "curs_id" => $cicle->cur_id,
+                ];
+
+                $cicleModul[$countMod] = $obj;
+                $countMod = $countMod + 1;
+            }
+        }
+
+        return view('calendari/create_calendari', ['curs' => $curs, 'cicleModuls' => $cicleModul, 'curs_id' => 1, 'modulUfs' => $modulUf]);
     }
 
     /**

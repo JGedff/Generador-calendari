@@ -15,6 +15,10 @@ class Cur extends Model
         'data_final'
     ];
 
+    public function cicles() {
+        return $this->hasMany(Cicle::class);
+    }
+
     public function festius() {
         return $this->hasMany(Festiu::class);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Modul;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ModulController extends Controller
 {
@@ -20,7 +21,10 @@ class ModulController extends Controller
      */
     public function create()
     {
-        //
+        $curId = $this->getUrlCurId();
+        $cicleId = $this->getUrlCicleId();
+
+        return view('modul/create_modul', ['cur_id' => $curId, 'cicle_id' => $cicleId]);
     }
 
     /**
@@ -28,7 +32,18 @@ class ModulController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'nom' => 'required',
+            'cicle_id' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return 'Not all fields were mentioned';
+        }
+
+        $modul = Modul::create($request->all());
+
+        return redirect('/calendari/create');
     }
 
     /**
@@ -61,5 +76,28 @@ class ModulController extends Controller
     public function destroy(Modul $modul)
     {
         //
+    }
+
+    private function getUrl()
+    {
+        return "$_SERVER[REQUEST_URI]";
+    }
+
+    private function getUrlCurId()
+    {
+        $url = $this->getUrl();
+
+        $urlValues = explode('/', $url);
+
+        return $urlValues[2];
+    }
+
+    private function getUrlCicleId()
+    {
+        $url = $this->getUrl();
+
+        $urlValues = explode('/', $url);
+
+        return $urlValues[4];
     }
 }

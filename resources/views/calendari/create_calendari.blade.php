@@ -1,52 +1,95 @@
 @extends('..master')
 
+@section('header')
+<h2>Introdueix les dades del calendari</h2>
+@endsection
+
 @section('main')
-<h2 class="textMargin m-2">Introdueix les dades al formulari per crear el teu calendari</h2>
-<form action="/calendari" class="m-2" method="POST">
+<form method="POST" action="/calendari">
     @csrf
-    <table>
-        <tr>
-            <td><label>Calendari: </label>
-                <input type="text" class="form-control m-2" name="calendari_nom" id="calendari_nom" required></td>
-        </tr>
-        <tr>
-            <td><label>Curs: </label>
-                <input type="text" class="form-control m-2" name="cur_nom" id="cur_nom" aria-describedby="cursAnys" required></td>
-        </tr>
-        <tr>
-            <td><label>Data d'inici: </label>
-                <input type="date" class="form-control m-2" name="cur_data_inici" id="cur_data_inici" aria-describedby="iniciCurs" required></td>
-        </tr>
-        <tr>
-            <td><label>Data Finalització: </label>
-                <input type="date" class="form-control m-2" name="cur_data_final" id="cur_data_final" aria-describedby="finalCurs" required></td>
-        </tr>
-        <tr><td><label>Trimestre</label>
-                    <input type="text" class="form-control m-2" name="trimestre_nom" id="trimestre_nom" aria-describedby="trimestreAnys" required></td>
-        </tr>
-        <tr>
-            <td><label>Data inici Trimestre: </label>
-                <input type="date" class="form-control m-2" name="trimestre_data_inici" id="trimestre_data_inici" aria-describedby="trimestre" required></td>
-        </tr>
 
-        <tr>
-            <td><label>Data finalització Trimestre: </label>
-                <input type="date" class="form-control m-2" name="trimestre_data_final" id="trimestre_data_final" aria-describedby="trimestre" required></td>
-        </tr>
+    <div>
+        <select name="curs" id="curs">
+            @foreach($curs as $cur)
+                <option value="{{$cur->nom}}">{{$cur->nom}}</option>
+            @endforeach
+        </select>
+        <a class="btn btn-info" href="/cur/create" id="addCurs" >
+            Afegir curs
+        </a>
+    </div>
+    
+    <div>
+        <select name="cicle-modul" id="cicle-modul">
+            @foreach($cicleModuls as $cicleModul)
+                <option value="{{$cicleModul['cicle_id']}}-{{$cicleModul['curs_id']}}">{{$cicleModul['nom']}}</option>
+            @endforeach
+        </select>
+    
+        <select name="add" id="add" class="btn btn-dark" onclick="changeAddRef()">
+            <option value="cicle">Afegir cicle</option>
+            <option value="modul">Afegir módul</option>
+        </select>
+        <a href="/cur/{{$curs_id}}/cicle/create" id="addButton" class="btn p-2 btn-info">+</a>
+    </div>
 
-        <tr>
-            <td><label >Festiu</label>
-                <input type="text" class="form-control m-2" name="festiu_nom" id="festiu_nom" aria-describedby="festiuAnys" required></td>
-        </tr>
-        <tr>
-            <td><label>Data inici Festiu: </label>
-                <input type="date" class="form-control m-2" name="festiu_data_inici" id="festiu_data_inici" aria-describedby="festiu_data_inici" required></td>
-        </tr>
-        <tr>
-            <td><label>Data finalització Festiu: </label>
-                <input type="date" class="form-control m-2" name="festiu_data_final" id="festiu_data_final" aria-describedby="festiu_data_final" required></td>
-        </tr>
+    Hores:
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dll</th>
+                <th>Dm</th>
+                <th>Dc</th>
+                <th>Dj</th>
+                <th>Dv</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number" class="form-control" /></td>
+                <td><input type="number" class="form-control" /></td>
+                <td><input type="number" class="form-control" /></td>
+                <td><input type="number" class="form-control" /></td>
+                <td><input type="number" class="form-control" /></td>
+            </tr>
+        </tbody>
     </table>
-    <button type="submit" class="btn btn-success mt-2">Enviar</button>
-</form> 
+
+    Ufs:
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Dies</th>
+                <th>Pujar</th>
+                <th>Vaixar</th>
+            </tr>
+        </thead>
+        <tbody id="tableUf">
+            <tr>
+                <td><input type="text" name="ufName" id="ufName" class="form-control" /></td>
+                <td><input type="number" name="ufDays" id="ufDays" class="form-control" /></td>
+                <td><button>↑</button></td>
+                <td><button>↓</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit">Crea calendari</button>
+</form>
+
+<script>
+    const changeAddRef = () => {
+        const addValue = document.getElementById('add')
+        const cursId = document.getElementById('cicle-modul').value.split('-')[1]
+        console.log(document.getElementById('cicle-modul').value)
+        
+        if (addValue === 'cicle') {
+            document.getElementById('addButton').href = '/cur/' + cursId + '/cicle/create'
+        } else {
+            const cicleModul = document.getElementById('cicle-modul').value.split('-')[0]
+
+            document.getElementById('addButton').href = '/cur/' + cursId + '/cicle/' + cicleModul + '/modul/create'
+        }
+    }
+</script>
 @endsection
