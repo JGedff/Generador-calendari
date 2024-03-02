@@ -19,7 +19,15 @@ class CalendariFactory extends Factory
     {
         return [
             Calendari::create([
-                'nom' => $this->faker->word()
+                'curs' => $this->faker->word(),
+                'cicle_modul' => $this->faker->word(),
+                'dl_days' => $this->faker->numberBetween(0, 5),
+                'dm_days' => $this->faker->numberBetween(0, 5),
+                'dc_days' => $this->faker->numberBetween(0, 5),
+                'dj_days' => $this->faker->numberBetween(0, 5),
+                'dv_days' => $this->faker->numberBetween(0, 5),
+                'ufName' => $this->faker->word(),
+                'ufDays' => $this->faker->numberBetween(0, 100)
             ])
         ];
     }

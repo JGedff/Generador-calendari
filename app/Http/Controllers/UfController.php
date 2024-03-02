@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Uf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UfController extends Controller
 {
@@ -20,7 +21,11 @@ class UfController extends Controller
      */
     public function create()
     {
-        return view('uf/craete_uf');
+        $curId = $this->getUrlCurId();
+        $cicleId = $this->getUrlCicleId();
+        $modulId = $this->getUrlModulId();
+
+        return view('uf/create_uf', ['modul' => $modulId, 'cicle' => $cicleId, 'cur' => $curId]);
     }
 
     /**
@@ -28,7 +33,19 @@ class UfController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'nom' => 'required',
+            'data_inici' => 'required',
+            'data_final' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return 'Not all fields were mentioned';
+        }
+
+        $curs = Uf::create($request->all());
+
+        return redirect('/cur');
     }
 
     /**
@@ -61,5 +78,37 @@ class UfController extends Controller
     public function destroy(Uf $uf)
     {
         //
+    }
+
+    private function getUrl()
+    {
+        return "$_SERVER[REQUEST_URI]";
+    }
+
+    private function getUrlCurId()
+    {
+        $url = $this->getUrl();
+
+        $urlValues = explode('/', $url);
+
+        return $urlValues[2];
+    }
+
+    private function getUrlCicleId()
+    {
+        $url = $this->getUrl();
+
+        $urlValues = explode('/', $url);
+
+        return $urlValues[4];
+    }
+
+        private function getUrlModulId()
+    {
+        $url = $this->getUrl();
+
+        $urlValues = explode('/', $url);
+
+        return $urlValues[6];
     }
 }

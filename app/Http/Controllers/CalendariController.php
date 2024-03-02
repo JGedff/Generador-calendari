@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DateTime;
 use App\Models\Cur;
 use App\Models\Cicle;
+use App\Models\Uf;
 use App\Models\Festiu;
 use App\Models\Calendari;
 use App\Models\Trimestre;
@@ -47,6 +48,17 @@ class CalendariController extends Controller
 
                 $cicleModul[$countMod] = $obj;
                 $countMod = $countMod + 1;
+
+                foreach ($modul->ufs as $uf) {
+                    $obj2 = [
+                        "nom" => $modul->nom . ' - ' . $uf->nom,
+                        "modul_id" => $modul->id,
+                        "uf_id" => $uf->id,
+                    ];
+
+                    $modulUf[$countUf] = $obj2;
+                    $countUf = $countUf + 1;
+                }
             }
         }
 
@@ -59,46 +71,22 @@ class CalendariController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'calendari_nom' => 'required',
-            'cur_nom' => 'required',
-            'trimestre_nom' => 'required',
-            'festiu_nom' => 'required',
-            'cur_data_inici' => 'required',
-            'cur_data_final' => 'required',
-            'festiu_data_inici' => 'required',
-            'festiu_data_final' => 'required',
-            'trimestre_data_inici' => 'required',
-            'trimestre_data_final' => 'required'
+            'curs' => 'required',
+            'cicle_modul' => 'required',
+            'dl_days' => 'required',
+            'dm_days' => 'required',
+            'dc_days' => 'required',
+            'dj_days' => 'required',
+            'dv_days' => 'required',
+            'ufName' => 'required',
+            'ufDays' => 'required'
         ]);
 
         if ($validate->fails()) {
             return 'Not all fields were mentioned';
         }
 
-        $reqCur = ['nom' => $request->cur_nom, 'data_inici' => $request->cur_data_inici, 'data_final' => $request->cur_data_final];
-        $reqFestiu = ['nom' => $request->festiu_nom, 'data_inici' => $request->festiu_data_inici, 'data_final' => $request->festiu_data_final, 'cur_id' => ''];
-        $reqTrimestre = ['nom' => $request->trimestre_nom, 'data_inici' => $request->trimestre_data_inici, 'data_final' => $request->trimestre_data_final, 'cur_id' => ''];
-
-        $data_inici = new DateTime($reqFestiu['data_inici']);
-        $data_final = new DateTime($reqFestiu['data_final']);
-
-        array_push($reqFestiu, 'vacances');
-
-        if (intval($data_inici->diff($data_final)->format('%a')) > 0) {
-            $reqFestiu['vacances'] = true;
-        } else {
-            $reqFestiu['vacances'] = false;
-        }
-
-        $curs = Cur::create($reqCur);
-        $reqTrimestre['cur_id'] = $curs->id;
-        $reqFestiu['cur_id'] = $curs->id;
-        $trimestre = Trimestre::create($reqTrimestre);
-        $festiu = Festiu::create($reqFestiu);
-
-        $reqCalendari = ['nom' => $request->calendari_nom, 'cur_id' => $curs->id];
-
-        $calendari = Calendari::create($reqCalendari);
+        $calendari = Calendari::create($request->all());
 
         return redirect('/calendari');
     }

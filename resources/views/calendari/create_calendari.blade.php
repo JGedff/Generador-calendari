@@ -20,7 +20,7 @@
     </div>
     
     <div>
-        <select name="cicle-modul" id="cicle-modul">
+        <select name="cicle_modul" id="cicle_modul" onclick="changeModul()">
             @foreach($cicleModuls as $cicleModul)
                 <option value="{{$cicleModul['cicle_id']}}-{{$cicleModul['curs_id']}}">{{$cicleModul['nom']}}</option>
             @endforeach
@@ -46,11 +46,11 @@
         </thead>
         <tbody>
             <tr>
-                <td><input type="number" class="form-control" /></td>
-                <td><input type="number" class="form-control" /></td>
-                <td><input type="number" class="form-control" /></td>
-                <td><input type="number" class="form-control" /></td>
-                <td><input type="number" class="form-control" /></td>
+                <td><input type="number" min="0" name="dl_days" id="dl_days" class="form-control" /></td>
+                <td><input type="number" min="0" name="dm_days" id="dm_days"class="form-control" /></td>
+                <td><input type="number" min="0" name="dc_days" id="dc_days"class="form-control" /></td>
+                <td><input type="number" min="0" name="dj_days" id="dj_days"class="form-control" /></td>
+                <td><input type="number" min="0" name="dv_days" id="dv_days"class="form-control" /></td>
             </tr>
         </tbody>
     </table>
@@ -67,8 +67,8 @@
         </thead>
         <tbody id="tableUf">
             <tr>
-                <td><input type="text" name="ufName" id="ufName" class="form-control" /></td>
-                <td><input type="number" name="ufDays" id="ufDays" class="form-control" /></td>
+                <td><input type="text" value="UF1" name="ufName" id="ufName" class="form-control" /></td>
+                <td><input type="number" name="ufDays" min="0" id="ufDays" class="form-control" /></td>
                 <td><button>↑</button></td>
                 <td><button>↓</button></td>
             </tr>
@@ -78,10 +78,11 @@
 </form>
 
 <script>
-    const changeAddRef = () => {
+    var UFS = <?php echo json_encode($modulUfs);?>
+
+    function changeAddRef() {
         const addValue = document.getElementById('add')
         const cursId = document.getElementById('cicle-modul').value.split('-')[1]
-        console.log(document.getElementById('cicle-modul').value)
         
         if (addValue === 'cicle') {
             document.getElementById('addButton').href = '/cur/' + cursId + '/cicle/create'
@@ -90,6 +91,10 @@
 
             document.getElementById('addButton').href = '/cur/' + cursId + '/cicle/' + cicleModul + '/modul/create'
         }
+    }
+
+    function changeModul() {
+        console.log(UFS)
     }
 </script>
 @endsection

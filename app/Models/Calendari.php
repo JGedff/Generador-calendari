@@ -10,7 +10,14 @@ class Calendari extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nom',
-        'cur_id'
+        'curs',
+        'cicle_modul',
+        'dl_days',
+        'dm_days',
+        'dc_days',
+        'dj_days',
+        'dv_days',
+        'ufName',
+        'ufDays'
     ];
 }
