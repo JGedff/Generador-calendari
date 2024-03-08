@@ -11,8 +11,7 @@ class Uf extends Model
 
     protected $fillable = [
         'nom',
-        'data_inici',
-        'data_final',
+        'dies',
         'modul_id'
     ];
 

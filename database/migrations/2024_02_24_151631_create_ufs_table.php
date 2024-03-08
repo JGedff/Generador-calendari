@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('ufs', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->dateTime('data_inici', 6);
-            $table->dateTime('data_final', 6);
+            $table->integer('dies');
             $table->unsignedBigInteger('modul_id');
             $table->foreign('modul_id')
                 ->references('id')

@@ -37,6 +37,7 @@ class CalendariController extends Controller
         $modulUf = array();
         $countMod = 0;
         $countUf = 0;
+        $ufsFirstModule = 0;
 
         foreach ($cicles as $cicle) {
             foreach ($cicle->moduls as $modul) {
@@ -44,14 +45,21 @@ class CalendariController extends Controller
                     "nom" => $cicle->nom . ' - ' . $modul->nom,
                     "cicle_id" => $cicle->id,
                     "curs_id" => $cicle->cur_id,
+                    "modul_id" => $modul->id,
                 ];
 
                 $cicleModul[$countMod] = $obj;
                 $countMod = $countMod + 1;
 
+                if ($modul->id == 1) {
+                    $ufsFirstModule = count($modul->ufs);
+                }
+
                 foreach ($modul->ufs as $uf) {
                     $obj2 = [
                         "nom" => $modul->nom . ' - ' . $uf->nom,
+                        "nomUf" => $uf->nom,
+                        "dies" => $uf->dies,
                         "modul_id" => $modul->id,
                         "uf_id" => $uf->id,
                     ];
@@ -62,7 +70,11 @@ class CalendariController extends Controller
             }
         }
 
-        return view('calendari/create_calendari', ['curs' => $curs, 'cicleModuls' => $cicleModul, 'curs_id' => 1, 'modulUfs' => $modulUf]);
+        if ($ufsFirstModule == 0) {
+            $ufsFirstModule = 1;
+        }
+
+        return view('calendari/create_calendari', ['curs' => $curs, 'cicleModuls' => $cicleModul, 'curs_id' => 1, 'modulUfs' => $modulUf, 'ufsFirstModule' => $ufsFirstModule]);
     }
 
     /**
@@ -78,15 +90,55 @@ class CalendariController extends Controller
             'dc_days' => 'required',
             'dj_days' => 'required',
             'dv_days' => 'required',
-            'ufName' => 'required',
-            'ufDays' => 'required'
         ]);
 
         if ($validate->fails()) {
             return 'Not all fields were mentioned';
         }
 
-        $calendari = Calendari::create($request->all());
+        $cur_id = $request['curs'];
+        $cicle_modul = explode('-', $request['cicle_modul']);
+        $cicle_id = $cicle_modul[0];
+        $modul_id = $cicle_modul[2];
+
+        foreach ($request as $key => $value) {
+            switch ($key) {
+                case 'ufName1':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies1'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName2':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies2'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName3':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies3'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName4':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies4'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName5':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies5'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName6':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies6'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName7':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies7'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName8':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies8'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName9':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies9'], 'modul_id' => $modul_id]);
+                    break;
+                case 'ufName10':
+                    Uf::create(['nom' => $value, 'dies' => $request['ufDies10'], 'modul_id' => $modul_id]);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        $calendari = Calendari::create(['cur_id' => $cur_id, 'cicle_id' => $cicle_id, 'modul_id' => $modul_id, 'dl_days' => $request['dl_days'], 'dm_days' => $request['dm_days'], 'dc_days' => $request['dc_days'], 'dj_days' => $request['dj_days'], 'dv_days' => $request['']]);
 
         return redirect('/calendari');
     }

@@ -10,14 +10,25 @@ class Calendari extends Model
     use HasFactory;
 
     protected $fillable = [
-        'curs',
-        'cicle_modul',
+        'cur_id',
+        'cicle_id',
+        'modul_id',
         'dl_days',
         'dm_days',
         'dc_days',
         'dj_days',
-        'dv_days',
-        'ufName',
-        'ufDays'
+        'dv_days'
     ];
+
+    public function curs() {
+        return $this->belongsTo(Cur::class);
+    }
+    
+    public function cicles() {
+        return $this->belongsTo(Cicle::class);
+    }
+
+    public function moduls() {
+        return $this->belongsTo(Modul::class);
+    }
 }

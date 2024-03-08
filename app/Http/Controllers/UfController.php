@@ -35,6 +35,7 @@ class UfController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'nom' => 'required',
+            'dies' => 'required',
             'data_inici' => 'required',
             'data_final' => 'required'
         ]);
@@ -45,7 +46,7 @@ class UfController extends Controller
 
         $curs = Uf::create($request->all());
 
-        return redirect('/cur');
+        return redirect('/calendari/create');
     }
 
     /**

@@ -19,8 +19,7 @@ class UfFactory extends Factory
         return [
             Uf::create([
                 'nom' => $this->faker->word(),
-                'data_inici' => $this->faker->dateTime(),
-                'data_final' => $this->faker->dateTime()
+                'dies' => $this->faker->numberBetween(10, 99)
             ])
         ];
     }
