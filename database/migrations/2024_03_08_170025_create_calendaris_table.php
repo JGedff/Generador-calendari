@@ -13,15 +13,26 @@ return new class extends Migration
     {
         Schema::create('calendaris', function (Blueprint $table) {
             $table->id();
-            $table->string('curs');
-            $table->string('cicle_modul');
+            $table->unsignedBigInteger('cur_id');
+            $table->foreign('cur_id')
+                ->references('id')
+                    ->on('curs')
+                        ->onDelete('cascade');
+            $table->unsignedBigInteger('cicle_id');
+            $table->foreign('cicle_id')
+                ->references('id')
+                    ->on('cicles')
+                        ->onDelete('cascade');
+            $table->unsignedBigInteger('modul_id');
+            $table->foreign('modul_id')
+                ->references('id')
+                    ->on('moduls')
+                        ->onDelete('cascade');
             $table->integer('dl_days');
             $table->integer('dm_days');
             $table->integer('dc_days');
             $table->integer('dj_days');
             $table->integer('dv_days');
-            $table->string('ufName');
-            $table->integer('ufDays');
             $table->timestamps();
         });
     }

@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Cur;
+use App\Models\Uf;
+use App\Models\Modul;
+use App\Models\Cicle;
 use App\Models\Festiu;
 use App\Models\Trimestre;
 
@@ -19,14 +22,11 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->count(10);
 
-        Calendari::factory()->count(2)->create();
-
         Cur::factory()->count(10)
-            -has(
+            ->has(
                 Cicle::factory()->count(8)
                     ->has(
                         Modul::factory()->count(4)
-                            ->has(Dia::factory()->count(3))
                             ->has(Uf::factory()->count(2))
                     )
             )

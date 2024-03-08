@@ -107,7 +107,8 @@
     const phpUfCount = <?php echo $ufsFirstModule; ?>;
     let UfCount = phpUfCount + 1
     let cursId = 1
-    let cicleModul = 1
+    let cicleId = 1
+    let modulId = 1
 
     function changeCurs() {
         cursId = document.getElementById('curs').value
@@ -131,9 +132,10 @@
     }
     
     function changeModul() {
-        cicleModul = document.getElementById('cicle_modul').value.split('-')[0]
+        cicleId = document.getElementById('cicle_modul').value.split('-')[0]
+        modulId = document.getElementById('cicle_modul').value.split('-')[2]
 
-        document.getElementById('addModul').href = '/cur/' + cursId + '/cicle/' + cicleModul + '/modul/create'
+        document.getElementById('addModul').href = '/cur/' + cursId + '/cicle/' + cicleId + '/modul/create'
         document.getElementById('tableUf').innerHTML = ''
 
         addExistentsUf()
@@ -143,7 +145,7 @@
         UfCount = 1
 
         UFS.forEach(uf => {
-            if (uf.modul_id == cicleModul) {
+            if (uf.modul_id == modulId) {
                 document.getElementById('tableUf').innerHTML += `<tr id="tr${UfCount}">
                     <td><span class="ui-icon ui-icon-arrow-2n-s">↑ ↓</span></td>
                     <td><input type="text" name="ufName${UfCount}" value="${uf.nomUf}" id="ufName${UfCount}" class="form-control" /></td>

@@ -36,8 +36,6 @@ class UfController extends Controller
         $validate = Validator::make($request->all(), [
             'nom' => 'required',
             'dies' => 'required',
-            'data_inici' => 'required',
-            'data_final' => 'required'
         ]);
 
         if ($validate->fails()) {

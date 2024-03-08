@@ -23,7 +23,7 @@ class CalendariController extends Controller
     {
         $calendari = Calendari::All();
 
-        return redirect('/');
+        return view('calendari/show_calendars', ['calendaris' => $calendari]);
     }
 
     /**
@@ -96,6 +96,7 @@ class CalendariController extends Controller
             return 'Not all fields were mentioned';
         }
 
+        $allUf = Uf::all();
         $cur_id = $request['curs'];
         $cicle_modul = explode('-', $request['cicle_modul']);
         $cicle_id = $cicle_modul[0];
@@ -138,7 +139,7 @@ class CalendariController extends Controller
             }
         }
 
-        $calendari = Calendari::create(['cur_id' => $cur_id, 'cicle_id' => $cicle_id, 'modul_id' => $modul_id, 'dl_days' => $request['dl_days'], 'dm_days' => $request['dm_days'], 'dc_days' => $request['dc_days'], 'dj_days' => $request['dj_days'], 'dv_days' => $request['']]);
+        $calendari = Calendari::create(['cur_id' => $cur_id, 'cicle_id' => $cicle_id, 'modul_id' => $modul_id, 'dl_days' => $request['dl_days'], 'dm_days' => $request['dm_days'], 'dc_days' => $request['dc_days'], 'dj_days' => $request['dj_days'], 'dv_days' => $request['dv_days']]);
 
         return redirect('/calendari');
     }
